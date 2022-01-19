@@ -1,0 +1,40 @@
+[gd_scene format=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Velocity" type="Label" parent="."]
+margin_top = 52.0
+margin_right = 104.0
+margin_bottom = 66.0
+text = "Velocity :"
+align = 2
+
+[node name="CameraAngle" type="Label" parent="."]
+margin_top = 77.0
+margin_right = 104.0
+margin_bottom = 91.0
+text = "Camera Angle :"
+align = 2
+
+[node name="Velocity_Real" type="Label" parent="."]
+margin_left = 111.0
+margin_top = 52.0
+margin_right = 565.0
+margin_bottom = 66.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CameraAngle_Real" type="Label" parent="."]
+margin_left = 111.0
+margin_top = 77.0
+margin_right = 565.0
+margin_bottom = 91.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
