@@ -11,6 +11,7 @@
 script = ExtResource( 3 )
 
 [node name="level_0" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.178, 1.877, -3.673 )
 
 [node name="Position3D" type="Position3D" parent="."]
 
