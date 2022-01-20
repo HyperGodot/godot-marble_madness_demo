@@ -1,7 +1,7 @@
 [gd_resource type="Environment" load_steps=2 format=2]
 
 [sub_resource type="ProceduralSky" id=1]
-ground_curve = 0.342967
+ground_curve = 0.367583
 
 [resource]
 background_mode = 2
@@ -21,3 +21,5 @@ ssao_enabled = true
 dof_blur_far_distance = 27.05
 dof_blur_far_transition = 2.99
 dof_blur_far_amount = 0.11
+adjustment_brightness = 0.7
+adjustment_contrast = 2.29
