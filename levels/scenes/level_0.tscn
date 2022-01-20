@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/levels/level0/assets_level_0.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/spawn_point/spawn_point.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://ui/debug/ball/ui_debug_ball.tscn" type="PackedScene" id=6]
 [ext_resource path="res://player/camera/player_camera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/camera/player_camera.gd" type="Script" id=8]
+[ext_resource path="res://assets/env/cam_env.tres" type="Environment" id=9]
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 3 )
@@ -20,6 +21,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.733258, 2.26544, -8.91449 )
 
 [node name="player_camera" parent="." instance=ExtResource( 7 )]
 pause_mode = 2
+environment = ExtResource( 9 )
 script = ExtResource( 8 )
 player_ball = NodePath("../player_ball")
 
@@ -28,7 +30,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.446, 6.01065, -19.7949 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, -1.31134e-07, -7.57103e-08, -7.57103e-08, -0.866025, 0.5, -1.31134e-07, -0.5, -0.866025, 1.23504, 3.53473, -13.0157 )
-light_energy = 2.761
 light_specular = 1.087
 light_bake_mode = 0
 shadow_enabled = true
