@@ -6,6 +6,7 @@ ground_curve = 0.367583
 [resource]
 background_mode = 2
 background_sky = SubResource( 1 )
+background_sky_orientation = Basis( 1, 0, 0, 0, 0.929, 0, 0, 0, 1 )
 fog_enabled = true
 fog_color = Color( 0.156863, 0.184314, 0.211765, 1 )
 fog_depth_enabled = false
