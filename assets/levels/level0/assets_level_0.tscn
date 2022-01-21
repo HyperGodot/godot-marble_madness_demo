@@ -15,31 +15,4 @@ material/0 = ExtResource( 2 )
 material/1 = ExtResource( 3 )
 material/2 = ExtResource( 4 )
 
-[node name="Plane004" parent="level_0" index="1"]
-material/0 = null
-
-[node name="Plane002" parent="level_0/Plane004" index="0"]
-material/0 = null
-
-[node name="Plane005" parent="level_0/Plane004" index="1"]
-material/0 = null
-
-[node name="Plane006" parent="level_0/Plane004" index="2"]
-material/0 = null
-
-[node name="Plane007" parent="level_0" index="2"]
-material/0 = null
-
-[node name="Plane008" parent="level_0/Plane007" index="0"]
-material/0 = null
-
-[node name="Plane009" parent="level_0/Plane007" index="1"]
-material/0 = null
-
-[node name="Plane010" parent="level_0/Plane007" index="2"]
-material/0 = null
-
-[node name="Plane001" parent="level_0" index="4"]
-material/0 = null
-
 [editable path="level_0"]
