@@ -1,0 +1,54 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/materials/grid_white.tres" type="Material" id=1]
+[ext_resource path="res://levels/spawn_point/spawn_point.tscn" type="PackedScene" id=2]
+[ext_resource path="res://levels/level_script.gd" type="Script" id=3]
+[ext_resource path="res://player/ball/player_ball.tscn" type="PackedScene" id=4]
+[ext_resource path="res://special_input.gd" type="Script" id=5]
+[ext_resource path="res://ui/debug/ball/ui_debug_ball.tscn" type="PackedScene" id=6]
+[ext_resource path="res://player/camera/player_camera.tscn" type="PackedScene" id=7]
+[ext_resource path="res://player/camera/player_camera.gd" type="Script" id=8]
+[ext_resource path="res://assets/env/cam_env.tres" type="Environment" id=9]
+[ext_resource path="res://assets/levels/test_level/test_level.glb" type="PackedScene" id=10]
+[ext_resource path="res://assets/materials/grid_red.tres" type="Material" id=11]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="test_level" parent="." instance=ExtResource( 10 )]
+
+[node name="test_level" parent="test_level" index="0"]
+material/0 = ExtResource( 1 )
+material/1 = ExtResource( 11 )
+material/2 = ExtResource( 11 )
+
+[node name="player_ball" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.7372, 2.26544, -8.91449 )
+
+[node name="player_camera" parent="." instance=ExtResource( 7 )]
+pause_mode = 2
+environment = ExtResource( 9 )
+script = ExtResource( 8 )
+player_ball = NodePath("../player_ball")
+
+[node name="spawn_point" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.446, 6.01065, -19.7949 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, -1.31134e-07, -7.57103e-08, -7.57103e-08, -0.866025, 0.5, -1.31134e-07, -0.5, -0.866025, 1.23504, 3.53473, -13.0157 )
+light_specular = 1.087
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = -0.267
+
+[node name="special_input" type="Spatial" parent="."]
+pause_mode = 2
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8105, 5.36633, -12.0799 )
+script = ExtResource( 5 )
+
+[node name="DebugUI" parent="." instance=ExtResource( 6 )]
+
+[node name="CameraTween" type="Tween" parent="."]
+pause_mode = 2
+
+[editable path="test_level"]
