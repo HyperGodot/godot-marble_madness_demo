@@ -23,7 +23,7 @@ material/1 = ExtResource( 11 )
 material/2 = ExtResource( 11 )
 
 [node name="player_ball" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.7372, 2.26544, -8.91449 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.733, 2.265, -8.914 )
 
 [node name="player_camera" parent="." instance=ExtResource( 7 )]
 pause_mode = 2
