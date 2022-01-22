@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Theme" id=1]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -37,6 +39,39 @@ margin_left = 186.0
 margin_top = 77.0
 margin_right = 640.0
 margin_bottom = 91.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallPhysicsMode" type="Label" parent="."]
+margin_left = 39.0
+margin_top = 102.0
+margin_right = 178.0
+margin_bottom = 116.0
+text = "Ball Physics Mode :"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallPhysicsMode_Value" type="Label" parent="."]
+margin_left = 186.0
+margin_top = 102.0
+margin_right = 640.0
+margin_bottom = 116.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallFrictionSlider" type="HSlider" parent="."]
+margin_left = 1347.0
+margin_top = 55.0
+margin_right = 1595.0
+margin_bottom = 71.0
+theme = SubResource( 1 )
+max_value = 1.0
+step = 0.1
+scrollable = false
 __meta__ = {
 "_edit_use_anchors_": false
 }

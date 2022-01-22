@@ -4,6 +4,7 @@
 [ext_resource path="res://player/ball/player_ball.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=2]
+friction = 0.0
 rough = true
 
 [sub_resource type="SphereShape" id=1]
@@ -22,4 +23,4 @@ shape = SubResource( 1 )
 light_color = Color( 0, 0.717647, 1, 1 )
 light_energy = 16.0
 light_bake_mode = 0
-omni_range = 0.174
+omni_range = 0.175

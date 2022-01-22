@@ -19,6 +19,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.178, 1.877, -3.673 )
 [node name="player_ball" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.733258, 2.26544, -8.91449 )
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 9 )
+
 [node name="player_camera" parent="." instance=ExtResource( 7 )]
 pause_mode = 2
 environment = ExtResource( 9 )
@@ -29,7 +32,7 @@ player_ball = NodePath("../player_ball")
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.446, 6.01065, -19.7949 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, -1.31134e-07, -7.57103e-08, -7.57103e-08, -0.866025, 0.5, -1.31134e-07, -0.5, -0.866025, 1.23504, 3.53473, -13.0157 )
+transform = Transform( 8.74228e-08, -0.5, -0.866025, 7.57103e-08, -0.866025, 0.5, -1, -1.09278e-07, -3.78552e-08, 1.23504, 3.53473, -13.0157 )
 light_specular = 1.087
 light_bake_mode = 0
 shadow_enabled = true

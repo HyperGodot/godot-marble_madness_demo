@@ -1,20 +1,53 @@
 extends RigidBody
 
-var rolling_force = 10
-var rolling_force_max : float = 50
+enum BallPhysicsMode {
+	FREE_FLY,
+	ENGINE_PHYSICS_ROLL,
+	ENGINE_PHYSICS_LINEAR,
+	PHYSICS_MAX
+}
+
+var rolling_force : float = 10.0
+var rolling_force_max : float = 50.0
+
+var linear_force : float = 2.0
+
+var freefly_force : float = 3.0
+
+var ball_physics_mode : int = BallPhysicsMode.ENGINE_PHYSICS_LINEAR
 var bFirstPersonCamera = false
-var bDebugPaused : bool = false
-var ballCameraOriginalOrigin : Vector3
 
 var lVelocity : Label
 var lAngularVelocity : Label
+var lBallPhysicsMode : Label
+var sldBallFrictionSlider : Slider
 
 func _ready():
 	lVelocity = get_tree().get_current_scene().get_node("DebugUI").get_node("BallVelocity_Value")
 	lAngularVelocity = get_tree().get_current_scene().get_node("DebugUI").get_node("BallAngularVelocity_Value")
+	lBallPhysicsMode = get_tree().get_current_scene().get_node("DebugUI").get_node("BallPhysicsMode_Value")
+	sldBallFrictionSlider = get_tree().get_current_scene().get_node("DebugUI").get_node("BallFrictionSlider")
+	
+	updateBallPhysicsMode()
 
 func _process(_delta: float) -> void:
 	pass
+	
+func updateBallPhysicsMode() -> void:
+	if(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+		lBallPhysicsMode.text = "Free Fly"
+		self.angular_velocity = Vector3(0, 0, 0)
+		self.rotation = Vector3(0, 0, 0)
+		self.linear_velocity = Vector3(0, 0, 0)
+		self.mode = RigidBody.MODE_STATIC
+	elif(ball_physics_mode == BallPhysicsMode.ENGINE_PHYSICS_ROLL):
+		lBallPhysicsMode.text = "Engine Physics (Roll)"
+		self.physics_material_override.friction = 1.0
+		self.mode = RigidBody.MODE_RIGID
+	else:
+		lBallPhysicsMode.text = "Engine Physics (Linear)"
+		self.physics_material_override.friction = 0.035
+		self.mode = RigidBody.MODE_RIGID
 	
 func checkAngularVelocity(delta : float, angVelocity : float, bAdd : bool) -> float:
 	if bAdd:
@@ -36,9 +69,6 @@ func _physics_process(delta: float) -> void:
 	#	else:
 	#		bFirstPersonCamera = true
 			
-	if bDebugPaused:
-		return
-			
 	#if false:
 	#	ballCamera.global_transform.origin = lerp(
 	#		ballCamera.global_transform.origin, 
@@ -48,22 +78,47 @@ func _physics_process(delta: float) -> void:
 	#		ballCamera.global_transform.origin, 
 	#		global_transform.origin, 1.0
 	#	)
+	
+	if Input.is_action_just_pressed("ball_cycle_physics_mode"):
+		ball_physics_mode = (ball_physics_mode + 1) % BallPhysicsMode.PHYSICS_MAX
+		if(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+			self.mode = RigidBody.MODE_STATIC
+		else:
+			self.mode = RigidBody.MODE_RIGID
+		updateBallPhysicsMode()
+	
+			
+	#if(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+	#	return
 		
-	
-	
-	#$FloorCheck.global_transform.origin = global_transform.origin
 	if Input.is_action_pressed("ball_roll_up"):
-		# angular_velocity.x = checkAngularVelocity(delta, angular_velocity.x, false)
-		angular_velocity.x = clamp(angular_velocity.x - rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		if(ball_physics_mode == BallPhysicsMode.ENGINE_PHYSICS_ROLL):
+			angular_velocity.x = clamp(angular_velocity.x - rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		elif(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+			self.translate( Vector3(0, 0, -freefly_force) * delta)
+		else:
+			linear_velocity.z -= (linear_force * delta);
 	elif Input.is_action_pressed("ball_roll_down"):
-		# angular_velocity.x = checkAngularVelocity(delta, angular_velocity.x, true)
-		angular_velocity.x = clamp(angular_velocity.x + rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		if(ball_physics_mode == BallPhysicsMode.ENGINE_PHYSICS_ROLL):
+			angular_velocity.x = clamp(angular_velocity.x + rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		elif(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+			self.translate( Vector3(0, 0, freefly_force) * delta)
+		else:
+			linear_velocity.z += (linear_force * delta);
 	if Input.is_action_pressed("ball_roll_left"):
-		#angular_velocity.z = checkAngularVelocity(delta, angular_velocity.z, true)
-		angular_velocity.z = clamp(angular_velocity.z + rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		if(ball_physics_mode == BallPhysicsMode.ENGINE_PHYSICS_ROLL):
+			angular_velocity.z = clamp(angular_velocity.z + rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		elif(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+			self.translate( Vector3(-freefly_force, 0, 0) * delta)
+		else:
+			linear_velocity.x -= (linear_force * delta);
 	elif Input.is_action_pressed("ball_roll_right"):
-		#angular_velocity.z = checkAngularVelocity(delta, angular_velocity.z, false)
-		angular_velocity.z = clamp(angular_velocity.z - rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		if(ball_physics_mode == BallPhysicsMode.ENGINE_PHYSICS_ROLL):
+			angular_velocity.z = clamp(angular_velocity.z - rolling_force*delta, rolling_force_max * -1, rolling_force_max)
+		elif(ball_physics_mode == BallPhysicsMode.FREE_FLY):
+			self.translate( Vector3(freefly_force, 0, 0) * delta)
+		else:
+			linear_velocity.x += (linear_force * delta);
 
 	#if Input.is_action_just_pressed("jump") and $FloorCheck.is_colliding():
 	#	apply_impulse(Vector3(), Vector3.UP*1000)
