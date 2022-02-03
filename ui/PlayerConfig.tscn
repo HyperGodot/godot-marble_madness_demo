@@ -1,0 +1,30 @@
+[gd_scene format=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="."]
+margin_left = 39.0
+margin_top = 27.0
+margin_right = 178.0
+margin_bottom = 41.0
+text = "Player Name :"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName_Value" type="LineEdit" parent="."]
+margin_left = 186.0
+margin_top = 27.0
+margin_right = 306.0
+margin_bottom = 51.0
+focus_mode = 1
+placeholder_text = "Marble Man"
+__meta__ = {
+"_edit_use_anchors_": false
+}

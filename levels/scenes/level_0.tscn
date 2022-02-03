@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/levels/level0/assets_level_0.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/spawn_point/spawn_point.tscn" type="PackedScene" id=2]
@@ -9,24 +9,29 @@
 [ext_resource path="res://player/camera/player_camera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://player/camera/player_camera.gd" type="Script" id=8]
 [ext_resource path="res://assets/env/cam_env.tres" type="Environment" id=9]
+[ext_resource path="res://hypergodot/hyper_gateway/hyper_gateway.gd" type="Script" id=10]
+[ext_resource path="res://hypergodot/hyper_gossip/hyper_gossip.gd" type="Script" id=11]
+[ext_resource path="res://ui/debug/hypercore/ui_debug_hypercore.tscn" type="PackedScene" id=12]
+[ext_resource path="res://ui/PlayerConfig.tscn" type="PackedScene" id=13]
 
-[node name="Spatial" type="Spatial"]
+[node name="Spatial" type="Node"]
 script = ExtResource( 3 )
 
 [node name="level_0" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.178, 1.877, -3.673 )
 
-[node name="player_ball" parent="." instance=ExtResource( 4 )]
+[node name="Players" type="Node" parent="."]
+
+[node name="PlayerLocal" parent="Players" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.733258, 2.26544, -8.91449 )
+
+[node name="PlayerLocalCamera" parent="Players" instance=ExtResource( 7 )]
+pause_mode = 2
+script = ExtResource( 8 )
+player_ball = NodePath("../PlayerLocal")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 9 )
-
-[node name="player_camera" parent="." instance=ExtResource( 7 )]
-pause_mode = 2
-environment = ExtResource( 9 )
-script = ExtResource( 8 )
-player_ball = NodePath("../player_ball")
 
 [node name="spawn_point" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.446, 6.01065, -19.7949 )
@@ -38,12 +43,32 @@ light_bake_mode = 0
 shadow_enabled = true
 shadow_bias = -0.267
 
-[node name="special_input" type="Spatial" parent="."]
+[node name="special_input" type="Node" parent="."]
 pause_mode = 2
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8105, 5.36633, -12.0799 )
 script = ExtResource( 5 )
 
-[node name="DebugUI" parent="." instance=ExtResource( 6 )]
+[node name="PlayerConfigUI" parent="." instance=ExtResource( 13 )]
+
+[node name="BallDebugUI" parent="." instance=ExtResource( 6 )]
+
+[node name="HyperGodotDebugUI" parent="." instance=ExtResource( 12 )]
 
 [node name="CameraTween" type="Tween" parent="."]
 pause_mode = 2
+
+[node name="HyperGodot" type="Node" parent="."]
+
+[node name="HyperGateway" type="Node" parent="HyperGodot"]
+script = ExtResource( 10 )
+autoStart = false
+
+[node name="HyperGossip" type="Node" parent="HyperGodot"]
+script = ExtResource( 11 )
+
+[connection signal="reset_ball" from="Players/PlayerLocal" to="Players/PlayerLocal" method="_on_PlayerLocal_reset_ball"]
+[connection signal="reset_ball" from="special_input" to="Players/PlayerLocal" method="_on_special_input_reset_ball"]
+[connection signal="toggle_hypergateway_startstop" from="HyperGodotDebugUI" to="HyperGodot/HyperGateway" method="_on_HyperGodotDebugUI_toggle_hypergateway_startstop"]
+[connection signal="started_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
+[connection signal="stopped_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_stopped_gateway"]
+[connection signal="event" from="HyperGodot/HyperGossip" to="." method="_on_HyperGossip_event"]
+[connection signal="listening" from="HyperGodot/HyperGossip" to="." method="_on_HyperGossip_listening"]

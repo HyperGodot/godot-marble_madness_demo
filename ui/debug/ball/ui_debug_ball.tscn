@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=2]
-
-[sub_resource type="Theme" id=1]
+[gd_scene format=2]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -9,69 +7,67 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallVelocity" type="Label" parent="."]
-margin_left = 39.0
-margin_top = 52.0
-margin_right = 178.0
-margin_bottom = 66.0
+[node name="BallInfoContainer" type="GridContainer" parent="."]
+margin_left = 24.0
+margin_top = 62.0
+margin_right = 629.0
+margin_bottom = 285.0
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallVelocity" type="Label" parent="BallInfoContainer"]
+margin_right = 139.0
+margin_bottom = 14.0
 text = "Ball Velocity :"
 align = 2
-
-[node name="BallVelocity_Value" type="Label" parent="."]
-margin_left = 186.0
-margin_top = 52.0
-margin_right = 640.0
-margin_bottom = 66.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallAngularVelocity" type="Label" parent="."]
-margin_left = 39.0
-margin_top = 77.0
-margin_right = 178.0
-margin_bottom = 91.0
+[node name="BallVelocity_Value" type="Label" parent="BallInfoContainer"]
+margin_left = 143.0
+margin_right = 143.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallAngularVelocity" type="Label" parent="BallInfoContainer"]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 32.0
 text = "Ball Angular Velocity :"
 align = 2
-
-[node name="BallAngularVelocity_Value" type="Label" parent="."]
-margin_left = 186.0
-margin_top = 77.0
-margin_right = 640.0
-margin_bottom = 91.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallPhysicsMode" type="Label" parent="."]
-margin_left = 39.0
-margin_top = 102.0
-margin_right = 178.0
-margin_bottom = 116.0
+[node name="BallAngularVelocity_Value" type="Label" parent="BallInfoContainer"]
+margin_left = 143.0
+margin_top = 18.0
+margin_right = 143.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallPhysicsMode" type="Label" parent="BallInfoContainer"]
+margin_top = 36.0
+margin_right = 139.0
+margin_bottom = 50.0
 text = "Ball Physics Mode :"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallPhysicsMode_Value" type="Label" parent="."]
-margin_left = 186.0
-margin_top = 102.0
-margin_right = 640.0
-margin_bottom = 116.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BallFrictionSlider" type="HSlider" parent="."]
-margin_left = 1347.0
-margin_top = 55.0
-margin_right = 1595.0
-margin_bottom = 71.0
-theme = SubResource( 1 )
-max_value = 1.0
-step = 0.1
-scrollable = false
+[node name="BallPhysicsMode_Value" type="Label" parent="BallInfoContainer"]
+margin_left = 143.0
+margin_top = 36.0
+margin_right = 143.0
+margin_bottom = 50.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

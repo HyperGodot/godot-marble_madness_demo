@@ -9,7 +9,7 @@ rough = true
 
 [sub_resource type="SphereShape" id=1]
 
-[node name="Spatial" type="RigidBody"]
+[node name="PlayerBall" type="RigidBody"]
 physics_material_override = SubResource( 2 )
 script = ExtResource( 2 )
 

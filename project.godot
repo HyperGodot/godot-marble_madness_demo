@@ -8,6 +8,52 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "HTTPEventSource",
+"language": "GDScript",
+"path": "res://hypergodot/http_event_source.gd"
+}, {
+"base": "HTTPEventSource",
+"class": "HyperEventSource",
+"language": "GDScript",
+"path": "res://hypergodot/hyper_request/hyper_event_source.gd"
+}, {
+"base": "Node",
+"class": "HyperGateway",
+"language": "GDScript",
+"path": "res://hypergodot/hyper_gateway/hyper_gateway.gd"
+}, {
+"base": "Node",
+"class": "HyperGossip",
+"language": "GDScript",
+"path": "res://hypergodot/hyper_gossip/hyper_gossip.gd"
+}, {
+"base": "HTTPRequest",
+"class": "HyperRequest",
+"language": "GDScript",
+"path": "res://hypergodot/hyper_request/hyper_request.gd"
+}, {
+"base": "Node",
+"class": "HyperUploader",
+"language": "GDScript",
+"path": "res://hypergodot/hyper_request/hyper_uploader.gd"
+}, {
+"base": "HyperGossip",
+"class": "ListGossip",
+"language": "GDScript",
+"path": "res://hypergodot/hyper_gossip/ListGossip.gd"
+} ]
+_global_script_class_icons={
+"HTTPEventSource": "",
+"HyperEventSource": "",
+"HyperGateway": "",
+"HyperGossip": "",
+"HyperRequest": "",
+"HyperUploader": "",
+"ListGossip": ""
+}
+
 [application]
 
 config/name="Marbles of Violence"
@@ -39,6 +85,16 @@ ball_roll_up={
 ball_roll_down={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ball_fly_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ball_fly_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 ball_cycle_physics_mode={

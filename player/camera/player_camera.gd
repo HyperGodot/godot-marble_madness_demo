@@ -5,12 +5,10 @@ onready var ball = get_node(player_ball)
 onready var offset = ball.to_local(global_transform.origin)
 
 var fCameraGoalFoV : float
-var lCameraAngle : Label
 var tween : Tween
 
 func _ready():
 	fCameraGoalFoV = fov
-	lCameraAngle = get_tree().get_current_scene().get_node("DebugUI").get_node("CameraAngle_Real")
 	tween = get_tree().get_current_scene().get_node("CameraTween")
 
 func _process(_delta):
