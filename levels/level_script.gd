@@ -82,6 +82,7 @@ func get_player_object(id):
 	return remotePlayer
 	
 func _broadcast_player():
+	var physics : int = player_local.mode
 	var translation : Vector3 = player_local.translation
 	var rotation : Vector3 = player_local.rotation_degrees
 	var velocity_linear : Vector3 = player_local.linear_velocity
@@ -89,6 +90,9 @@ func _broadcast_player():
 	
 	var data = {
 		#"profile": profile,
+		"physics": {
+			"mode": physics
+		},
 		"translation": {
 			"x": translation.x,
 			"y": translation.y,
@@ -117,12 +121,14 @@ func _on_remote_player_moved(positionData, id):
 	# print('Moving player', id, " ", positionData)
 	var remotePlayer = get_player_object(id)
 
+	var physics : int = int(positionData.physics.mode)
 	var translation : Vector3 = Vector3(positionData.translation.x, positionData.translation.y, positionData.translation.z)
 	var rotation : Vector3 = Vector3(positionData.rotation.x, positionData.rotation.y, positionData.rotation.z)
 	var velocity_linear : Vector3 = Vector3(positionData.velocity_linear.x, positionData.velocity_linear.y, positionData.velocity_linear.z)
 	var velocity_angular : Vector3 = Vector3(positionData.velocity_angular.x, positionData.velocity_angular.y, positionData.velocity_angular.z)
 	
 	remotePlayer.update_position(
+		physics,
 		translation,
 		rotation,
 		velocity_linear,

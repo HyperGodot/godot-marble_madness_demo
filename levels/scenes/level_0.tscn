@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/levels/level0/assets_level_0.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/spawn_point/spawn_point.tscn" type="PackedScene" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://hypergodot/hyper_gossip/hyper_gossip.gd" type="Script" id=11]
 [ext_resource path="res://ui/debug/hypercore/ui_debug_hypercore.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ui/PlayerConfig.tscn" type="PackedScene" id=13]
+[ext_resource path="res://player/ball/player_ball_remote.tscn" type="PackedScene" id=14]
+[ext_resource path="res://player/ball/player_ball_controller.gd" type="Script" id=15]
 
 [node name="Spatial" type="Node"]
 script = ExtResource( 3 )
@@ -24,11 +26,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.178, 1.877, -3.673 )
 
 [node name="PlayerLocal" parent="Players" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.733258, 2.26544, -8.91449 )
+script = ExtResource( 15 )
 
 [node name="PlayerLocalCamera" parent="Players" instance=ExtResource( 7 )]
 pause_mode = 2
 script = ExtResource( 8 )
 player_ball = NodePath("../PlayerLocal")
+
+[node name="PlayerBallRemote" parent="Players" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.03321, 1.38366, -6.26667 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 9 )
@@ -68,7 +74,6 @@ script = ExtResource( 11 )
 [node name="GossipEventTimer" type="Timer" parent="HyperGodot"]
 autostart = true
 
-[connection signal="moved" from="Players/PlayerLocal" to="." method="_on_PlayerLocal_moved"]
 [connection signal="reset_ball" from="special_input" to="Players/PlayerLocal" method="_on_special_input_reset_ball"]
 [connection signal="started_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
 [connection signal="stopped_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_stopped_gateway"]
