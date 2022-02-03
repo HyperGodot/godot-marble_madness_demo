@@ -12,6 +12,8 @@ onready var lGossipURL : Control = hyperdebugui.find_node("GossipURL_Value")
 
 onready var player_local : RigidBody = $Players/PlayerLocal
 
+onready var gossip_event_timer : Timer = $HyperGodot/GossipEventTimer
+
 const knownPlayers = {}
 
 const EVENT_PLAYER_POSITION = 'player_position'
@@ -61,11 +63,12 @@ func _on_HyperGateway_started_gateway(_pid : int):
 	updateGatewayStatus(_pid)
 	_perform_setup()
 	
-func _on_PlayerLocalNetworkTimer_timeout():
-	_broadcast_player()
-	
 func _on_HyperGateway_stopped_gateway():
 	updateGatewayStatus(0)
+	
+func _on_GossipEventTimer_timeout():
+	if gateway.getIsGatewayRunning():
+		_broadcast_player()
 
 func get_player_object(id):
 	if knownPlayers.has(id): return knownPlayers[id]
@@ -114,10 +117,10 @@ func _on_remote_player_moved(positionData, id):
 	# print('Moving player', id, " ", positionData)
 	var remotePlayer = get_player_object(id)
 
-	var translation = positionData.translation
-	var rotation = positionData.rotation
-	var velocity_linear = positionData.velocity_linear
-	var velocity_angular = positionData.velocity_angular
+	var translation : Vector3 = Vector3(positionData.translation.x, positionData.translation.y, positionData.translation.z)
+	var rotation : Vector3 = Vector3(positionData.rotation.x, positionData.rotation.y, positionData.rotation.z)
+	var velocity_linear : Vector3 = Vector3(positionData.velocity_linear.x, positionData.velocity_linear.y, positionData.velocity_linear.z)
+	var velocity_angular : Vector3 = Vector3(positionData.velocity_angular.x, positionData.velocity_angular.y, positionData.velocity_angular.z)
 	
 	remotePlayer.update_position(
 		translation,
@@ -128,3 +131,8 @@ func _on_remote_player_moved(positionData, id):
 
 func _on_PlayerLocal_moved():
 	_broadcast_player()
+
+
+func _on_HyperGodotDebugUI_position_update_rate_changed(seconds : float):
+	gossip_event_timer.wait_time = seconds
+	gossip_event_timer.start(seconds)

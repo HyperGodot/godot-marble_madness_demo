@@ -1,20 +1,17 @@
 extends Control
 
-signal toggle_hypergateway_startstop(start)
+signal gossip_update_rate_changed(seconds)
+
+onready var lGossipUpdateRate = $HypercoreDebugPanel/HypercoreDebugContainer/GossipUpdateRate
 
 var hypergateway : HyperGateway
 
 
 func _ready():
-	# Find Potential HyperGateway Node
-	hypergateway = get_tree().root.find_node("HyperGateway")
-	if(hypergateway):
-		hypergateway.start()
+	pass
 
 func _process(_delta):
-	hypergateway = get_tree().root.find_node("HyperGateway")
-	if(hypergateway):
-		hypergateway.start()
+	pass
 
 
 func _on_GatewayStartStopButton_button_up():
@@ -26,3 +23,7 @@ func _on_GatewayStartStopButton_button_up():
 			hypergateway.stop()
 		else:
 			hypergateway.start()
+
+func _on_GossipUpdateRate_Value_value_changed(value : float):
+	lGossipUpdateRate.text = "Gossip in " + String(value) + " Seconds: "
+	emit_signal("gossip_update_rate_changed", value)
