@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/debug/hypercore/ui_debug_hypercore.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.470588 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -10,17 +13,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HypercoreDebugContainer" type="GridContainer" parent="."]
+[node name="HypercoreDebugPanel" type="Panel" parent="."]
 margin_left = 1052.0
 margin_top = 62.0
-margin_right = 1591.0
-margin_bottom = 285.0
+margin_right = 1584.0
+margin_bottom = 235.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HypercoreDebugContainer" type="GridContainer" parent="HypercoreDebugPanel"]
+margin_left = 4.0
+margin_top = 6.0
+margin_right = 543.0
+margin_bottom = 229.0
 columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GatewayStartStopButton" type="Button" parent="HypercoreDebugContainer"]
+[node name="GatewayStartStopButton" type="Button" parent="HypercoreDebugPanel/HypercoreDebugContainer"]
 margin_right = 105.0
 margin_bottom = 20.0
 text = "Start Gateway"
@@ -28,7 +41,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="HypercoreDebugContainer"]
+[node name="Label" type="Label" parent="HypercoreDebugPanel/HypercoreDebugContainer"]
 margin_left = 109.0
 margin_top = 3.0
 margin_right = 187.0
@@ -37,7 +50,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GatewayStatus" type="Label" parent="HypercoreDebugContainer"]
+[node name="GatewayStatus" type="Label" parent="HypercoreDebugPanel/HypercoreDebugContainer"]
 margin_top = 24.0
 margin_right = 105.0
 margin_bottom = 38.0
@@ -47,7 +60,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GatewayStatus_Value" type="Label" parent="HypercoreDebugContainer"]
+[node name="GatewayStatus_Value" type="Label" parent="HypercoreDebugPanel/HypercoreDebugContainer"]
 margin_left = 109.0
 margin_top = 24.0
 margin_right = 187.0
@@ -57,7 +70,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GossipURL" type="Label" parent="HypercoreDebugContainer"]
+[node name="GossipURL" type="Label" parent="HypercoreDebugPanel/HypercoreDebugContainer"]
 margin_top = 42.0
 margin_right = 105.0
 margin_bottom = 56.0
@@ -67,11 +80,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GossipURL_Value" type="Label" parent="HypercoreDebugContainer"]
+[node name="GossipURL_Value" type="Label" parent="HypercoreDebugPanel/HypercoreDebugContainer"]
 margin_left = 109.0
 margin_top = 42.0
 margin_right = 187.0
 margin_bottom = 56.0
 text = "N/A"
 
-[connection signal="button_up" from="HypercoreDebugContainer/GatewayStartStopButton" to="." method="_on_GatewayStartStopButton_button_up"]
+[connection signal="button_up" from="HypercoreDebugPanel/HypercoreDebugContainer/GatewayStartStopButton" to="." method="_on_GatewayStartStopButton_button_up"]

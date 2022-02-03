@@ -7,7 +7,7 @@ enum BallPhysicsMode {
 	PHYSICS_MAX
 }
 
-signal reset_ball()
+signal moved
 
 var rolling_force : float = 10.0
 var rolling_force_max : float = 50.0
@@ -144,7 +144,6 @@ func _physics_process(delta: float) -> void:
 	# Update Debug UI
 	lVelocity.text = String(self.linear_velocity)
 	lAngularVelocity.text = String(self.angular_velocity)
-
 
 func _on_PlayerLocal_reset_ball() -> void:
 	resetBall()

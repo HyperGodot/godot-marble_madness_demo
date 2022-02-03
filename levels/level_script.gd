@@ -2,7 +2,7 @@ extends Node
 
 # TODO : Make Debug UI dynamic and not hardcoded in the core Hyper scripts.
 onready var hyperdebugui : Control = $HyperGodotDebugUI
-onready var hyperdebugui_gateway_startstop_button : Button = $HyperGodotDebugUI/HypercoreDebugContainer/GatewayStartStopButton
+onready var hyperdebugui_gateway_startstop_button : Button = $HyperGodotDebugUI/HypercoreDebugPanel/HypercoreDebugContainer/GatewayStartStopButton
 
 onready var gateway : HyperGateway = $HyperGodot/HyperGateway
 onready var gossip : HyperGossip = $HyperGodot/HyperGossip
@@ -61,6 +61,9 @@ func _on_HyperGateway_started_gateway(_pid : int):
 	updateGatewayStatus(_pid)
 	_perform_setup()
 	
+func _on_PlayerLocalNetworkTimer_timeout():
+	_broadcast_player()
+	
 func _on_HyperGateway_stopped_gateway():
 	updateGatewayStatus(0)
 
@@ -104,7 +107,7 @@ func _broadcast_player():
 			"z": velocity_angular.z
 		}
 	}
-	print('Broadcasting', data)
+	# print('Broadcasting', data)
 	gossip.broadcast_event(EVENT_PLAYER_POSITION, data)
 
 func _on_remote_player_moved(positionData, id):
@@ -122,3 +125,6 @@ func _on_remote_player_moved(positionData, id):
 		velocity_linear,
 		velocity_angular
 	)
+
+func _on_PlayerLocal_moved():
+	_broadcast_player()

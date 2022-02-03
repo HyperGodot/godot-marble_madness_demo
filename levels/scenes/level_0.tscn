@@ -30,6 +30,9 @@ pause_mode = 2
 script = ExtResource( 8 )
 player_ball = NodePath("../PlayerLocal")
 
+[node name="PlayerLocalNetworkTimer" type="Timer" parent="Players"]
+autostart = true
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 9 )
 
@@ -65,7 +68,8 @@ autoStart = false
 [node name="HyperGossip" type="Node" parent="HyperGodot"]
 script = ExtResource( 11 )
 
-[connection signal="reset_ball" from="Players/PlayerLocal" to="Players/PlayerLocal" method="_on_PlayerLocal_reset_ball"]
+[connection signal="moved" from="Players/PlayerLocal" to="." method="_on_PlayerLocal_moved"]
+[connection signal="timeout" from="Players/PlayerLocalNetworkTimer" to="." method="_on_PlayerLocalNetworkTimer_timeout"]
 [connection signal="reset_ball" from="special_input" to="Players/PlayerLocal" method="_on_special_input_reset_ball"]
 [connection signal="toggle_hypergateway_startstop" from="HyperGodotDebugUI" to="HyperGodot/HyperGateway" method="_on_HyperGodotDebugUI_toggle_hypergateway_startstop"]
 [connection signal="started_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
