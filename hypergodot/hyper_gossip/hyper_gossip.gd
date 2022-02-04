@@ -10,23 +10,33 @@ signal peers(peers)
 
 export var url = "hyper://blog.mauve.moe/"
 export var extension_name = "hyper-gossip-v1"
+export var pool_size = 8
+export var queue_warning_size = 8
 
 var peerListRequest = HyperRequest.new()
 var eventSource = HyperEventSource.new()
-var broadcastRequest = HyperRequest.new()
 
-var seen_messages = LRU.new()
+# Pool of HyperRequest objects to send multiple broadcasts at once
+var requestPool = []
+# Queue of requests that should be sent out
 var requestQueue = []
-var isRequesting = false
+# Track whether we have warned about sending more requests than can be handled
+var hasWarnedCapacity = false
+var seen_messages = LRU.new()
 
 func _ready():
 	randomize()
 	
 	add_child(peerListRequest)
 	peerListRequest.connect("request_completed", self, "_on_peer_list")
+	peerListRequest.use_threads = true
 
-	add_child(broadcastRequest)
-	broadcastRequest.connect("request_completed", self, "_on_broadcast_completed")
+	for i in range(pool_size):
+		var broadcastRequest = HyperRequest.new()
+		broadcastRequest.use_threads = true
+		add_child(broadcastRequest)
+		broadcastRequest.connect("request_completed", self, "_on_broadcast_completed")
+		requestPool.push_back(broadcastRequest)
 
 	add_child(eventSource)
 	eventSource.connect("event", self, "_on_event")
@@ -40,19 +50,28 @@ func _on_events_started(_statusCode, _responseHeaders):
 	emit_signal("listening", extension_name)
 
 func _enqueue_broadcast_request(reqURL, body):
-	if isRequesting:
+	var broadcastRequest = _get_next_request()
+	if broadcastRequest == null:
+		print('Queueing')
 		requestQueue.push_back({"reqURL": reqURL, "body": body})
-	else: _perform_broadcast_request(reqURL, body)
-	
-func _perform_broadcast_request(reqURL, body):
-	isRequesting = true
-	broadcastRequest.request(reqURL, [], false, HTTPClient.METHOD_POST, body)
+		if requestQueue.size() > queue_warning_size && !hasWarnedCapacity:
+			hasWarnedCapacity = true
+			print_debug("Warning: You have more gossip events than your queue_warning_size permits, either slow down the rate or increase the pool_size to send more");
+		return
+
+	broadcastRequest.request(reqURL, [], false, HTTPClient.METHOD_POST, body)	
+
+func _get_next_request():
+	for request in requestPool:
+		var status = request.get_http_client_status()
+		if status == HTTPClient.STATUS_DISCONNECTED:
+			return request
+	return null
 
 func _on_broadcast_completed(_result, _response_code, _headers, _body):
-	isRequesting = false
 	if requestQueue.size() == 0: return
 	var next = requestQueue.pop_front()
-	_perform_broadcast_request(next.reqURL, next.body)
+	_enqueue_broadcast_request(next.reqURL, next.body)
 
 func rebroadcast(event):
 	var reqURL = _get_extension_url()
@@ -75,7 +94,6 @@ func load_peers():
 
 func _generateEvent(type, data):
 	var id = _make_id()
-	print("generateEvent ID : " + String(id) )
 	seen_messages.track(id)
 	return {
 		"id": id,
