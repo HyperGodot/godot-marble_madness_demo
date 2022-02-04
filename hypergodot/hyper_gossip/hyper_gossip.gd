@@ -64,7 +64,6 @@ func _enqueue_broadcast_request(reqURL, body):
 func _get_next_request():
 	for request in requestPool:
 		var status = request.get_http_client_status()
-		print("Status:", status)
 		if status == HTTPClient.STATUS_DISCONNECTED:
 			return request
 	return null
