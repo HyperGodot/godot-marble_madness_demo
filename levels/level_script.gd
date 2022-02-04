@@ -3,6 +3,7 @@ extends Node
 # TODO : Make Debug UI dynamic and not hardcoded in the core Hyper scripts.
 onready var hyperdebugui : Control = $HyperGodotDebugUI
 onready var hyperdebugui_gateway_startstop_button : Button = $HyperGodotDebugUI/HypercoreDebugPanel/HypercoreDebugContainer/GatewayStartStopButton
+onready var hyperdebugui_gossipid_list : ItemList = $HyperGodotDebugUI/HypercoreDebugPanel/HypercoreDebugContainer/GossipIDList_Value
 
 onready var gateway : HyperGateway = $HyperGodot/HyperGateway
 onready var gossip : HyperGossip = $HyperGodot/HyperGossip
@@ -58,6 +59,8 @@ func _on_HyperGateway_started_gateway(_pid : int):
 		hyperdebugui = get_tree().get_current_scene().get_node("HyperGodotDebugUI")
 	if !hyperdebugui_gateway_startstop_button:
 		hyperdebugui_gateway_startstop_button = hyperdebugui.find_node("GatewayStartStopButton")
+	if !hyperdebugui_gossipid_list:
+		hyperdebugui_gossipid_list = hyperdebugui.find_node("GossipIDList_Value")
 	if !lGatewayStatus:
 		lGatewayStatus = hyperdebugui.find_node("GatewayStatus_Value")
 	updateGatewayStatus(_pid)
@@ -75,6 +78,8 @@ func get_player_object(id):
 
 	var remotePlayer = RemotePlayer.instance()
 	knownPlayers[id] = remotePlayer
+	
+	hyperdebugui_gossipid_list.add_item(id, null, false)
 
 	add_child(remotePlayer)
 	_broadcast_player()
@@ -138,7 +143,6 @@ func _on_remote_player_moved(positionData, id):
 func _on_PlayerLocal_moved():
 	_broadcast_player()
 
-
-func _on_HyperGodotDebugUI_position_update_rate_changed(seconds : float):
+func _on_HyperGodotDebugUI_gossip_update_rate_changed(seconds : float):
 	gossip_event_timer.wait_time = seconds
 	gossip_event_timer.start(seconds)

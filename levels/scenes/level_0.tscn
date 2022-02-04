@@ -71,6 +71,7 @@ script = ExtResource( 11 )
 autostart = true
 
 [connection signal="reset_ball" from="special_input" to="Players/PlayerLocal" method="_on_special_input_reset_ball"]
+[connection signal="gossip_update_rate_changed" from="HyperGodotDebugUI" to="." method="_on_HyperGodotDebugUI_gossip_update_rate_changed"]
 [connection signal="started_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
 [connection signal="stopped_gateway" from="HyperGodot/HyperGateway" to="." method="_on_HyperGateway_stopped_gateway"]
 [connection signal="event" from="HyperGodot/HyperGossip" to="." method="_on_HyperGossip_event"]
