@@ -20,6 +20,8 @@ var requestQueue = []
 var isRequesting = false
 
 func _ready():
+	randomize()
+	
 	add_child(peerListRequest)
 	peerListRequest.connect("request_completed", self, "_on_peer_list")
 
@@ -73,6 +75,7 @@ func load_peers():
 
 func _generateEvent(type, data):
 	var id = _make_id()
+	print("generateEvent ID : " + String(id) )
 	seen_messages.track(id)
 	return {
 		"id": id,

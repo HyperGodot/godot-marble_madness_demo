@@ -1,4 +1,7 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.470588 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -7,66 +10,83 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallInfoContainer" type="GridContainer" parent="."]
-margin_left = 24.0
+[node name="Panel" type="Panel" parent="."]
+margin_left = 10.0
 margin_top = 62.0
-margin_right = 629.0
-margin_bottom = 285.0
+margin_right = 373.0
+margin_bottom = 124.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallInfoMarginContainer" type="MarginContainer" parent="Panel"]
+margin_left = 4.0
+margin_top = 6.0
+margin_right = 147.0
+margin_bottom = 56.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallInfoContainer" type="GridContainer" parent="Panel/BallInfoMarginContainer"]
+margin_right = 143.0
+margin_bottom = 50.0
 columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallVelocity" type="Label" parent="BallInfoContainer"]
-margin_right = 139.0
+[node name="BallVelocity" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
+margin_right = 111.0
 margin_bottom = 14.0
-text = "Ball Velocity :"
+text = "Velocity :"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallVelocity_Value" type="Label" parent="BallInfoContainer"]
-margin_left = 143.0
-margin_right = 143.0
+[node name="BallVelocity_Value" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
+margin_left = 115.0
+margin_right = 115.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallAngularVelocity" type="Label" parent="BallInfoContainer"]
+[node name="BallAngularVelocity" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
 margin_top = 18.0
-margin_right = 139.0
+margin_right = 111.0
 margin_bottom = 32.0
-text = "Ball Angular Velocity :"
+text = "Angular Velocity :"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallAngularVelocity_Value" type="Label" parent="BallInfoContainer"]
-margin_left = 143.0
+[node name="BallAngularVelocity_Value" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
+margin_left = 115.0
 margin_top = 18.0
-margin_right = 143.0
+margin_right = 115.0
 margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallPhysicsMode" type="Label" parent="BallInfoContainer"]
+[node name="BallPhysicsMode" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
 margin_top = 36.0
-margin_right = 139.0
+margin_right = 111.0
 margin_bottom = 50.0
-text = "Ball Physics Mode :"
+text = "Physics :"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BallPhysicsMode_Value" type="Label" parent="BallInfoContainer"]
-margin_left = 143.0
+[node name="BallPhysicsMode_Value" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
+margin_left = 115.0
 margin_top = 36.0
-margin_right = 143.0
+margin_right = 115.0
 margin_bottom = 50.0
 __meta__ = {
 "_edit_use_anchors_": false

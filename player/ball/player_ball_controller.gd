@@ -51,11 +51,11 @@ func updateBallPhysicsMode() -> void:
 		self.linear_velocity = Vector3(0, 0, 0)
 		self.mode = RigidBody.MODE_STATIC
 	elif(ball_physics_mode == BallPhysicsMode.ENGINE_PHYSICS_ROLL):
-		lBallPhysicsMode.text = "Engine Physics (Roll)"
+		lBallPhysicsMode.text = "Rolling"
 		self.physics_material_override.friction = 1.0
 		self.mode = RigidBody.MODE_RIGID
 	else:
-		lBallPhysicsMode.text = "Engine Physics (Linear)"
+		lBallPhysicsMode.text = "Linear"
 		self.physics_material_override.friction = 0.035
 		self.mode = RigidBody.MODE_RIGID
 	
