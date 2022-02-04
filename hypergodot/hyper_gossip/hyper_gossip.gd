@@ -36,6 +36,7 @@ func _ready():
 		broadcastRequest.use_threads = true
 		add_child(broadcastRequest)
 		broadcastRequest.connect("request_completed", self, "_on_broadcast_completed")
+		requestPool.push_back(broadcastRequest)
 
 	add_child(eventSource)
 	eventSource.connect("event", self, "_on_event")
@@ -50,7 +51,8 @@ func _on_events_started(_statusCode, _responseHeaders):
 
 func _enqueue_broadcast_request(reqURL, body):
 	var broadcastRequest = _get_next_request()
-	if !broadcastRequest:
+	if broadcastRequest == null:
+		print('Queueing')
 		requestQueue.push_back({"reqURL": reqURL, "body": body})
 		if requestQueue.size() > queue_warning_size && !hasWarnedCapacity:
 			hasWarnedCapacity = true
@@ -61,7 +63,9 @@ func _enqueue_broadcast_request(reqURL, body):
 
 func _get_next_request():
 	for request in requestPool:
-		if request.get_http_client_status() == HTTPClient.STATUS_DISCONNECTED:
+		var status = request.get_http_client_status()
+		print("Status:", status)
+		if status == HTTPClient.STATUS_DISCONNECTED:
 			return request
 	return null
 
