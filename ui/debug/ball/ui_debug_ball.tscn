@@ -13,7 +13,7 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="."]
 margin_left = 10.0
 margin_top = 62.0
-margin_right = 373.0
+margin_right = 333.0
 margin_bottom = 124.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
@@ -38,7 +38,7 @@ __meta__ = {
 }
 
 [node name="BallVelocity" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
-margin_right = 111.0
+margin_right = 76.0
 margin_bottom = 14.0
 text = "Velocity :"
 align = 2
@@ -47,8 +47,8 @@ __meta__ = {
 }
 
 [node name="BallVelocity_Value" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
-margin_left = 115.0
-margin_right = 115.0
+margin_left = 80.0
+margin_right = 80.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -56,18 +56,18 @@ __meta__ = {
 
 [node name="BallAngularVelocity" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
 margin_top = 18.0
-margin_right = 111.0
+margin_right = 76.0
 margin_bottom = 32.0
-text = "Angular Velocity :"
+text = "A. Velocity :"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BallAngularVelocity_Value" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
-margin_left = 115.0
+margin_left = 80.0
 margin_top = 18.0
-margin_right = 115.0
+margin_right = 80.0
 margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -75,7 +75,7 @@ __meta__ = {
 
 [node name="BallPhysicsMode" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
 margin_top = 36.0
-margin_right = 111.0
+margin_right = 76.0
 margin_bottom = 50.0
 text = "Physics :"
 align = 2
@@ -84,9 +84,9 @@ __meta__ = {
 }
 
 [node name="BallPhysicsMode_Value" type="Label" parent="Panel/BallInfoMarginContainer/BallInfoContainer"]
-margin_left = 115.0
+margin_left = 80.0
 margin_top = 36.0
-margin_right = 115.0
+margin_right = 80.0
 margin_bottom = 50.0
 __meta__ = {
 "_edit_use_anchors_": false
