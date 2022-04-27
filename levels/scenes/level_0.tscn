@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/levels/level0/assets_level_0.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/spawn_point/spawn_point.tscn" type="PackedScene" id=2]
@@ -13,10 +13,15 @@
 [ext_resource path="res://hypergodot/hyper_gossip/hyper_gossip.gd" type="Script" id=11]
 [ext_resource path="res://ui/debug/hypercore/ui_debug_hypercore.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ui/PlayerConfig.tscn" type="PackedScene" id=13]
+[ext_resource path="res://menu/main/menu_main.scn" type="PackedScene" id=14]
 [ext_resource path="res://player/ball/player_ball_controller.gd" type="Script" id=15]
 
 [node name="Spatial" type="Node"]
 script = ExtResource( 3 )
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Menu_Main" parent="UI" instance=ExtResource( 14 )]
 
 [node name="level_0" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.178, 1.877, -3.673 )
@@ -50,10 +55,13 @@ pause_mode = 2
 script = ExtResource( 5 )
 
 [node name="PlayerConfigUI" parent="." instance=ExtResource( 13 )]
+visible = false
 
 [node name="BallDebugUI" parent="." instance=ExtResource( 6 )]
+visible = false
 
 [node name="HyperGodotDebugUI" parent="." instance=ExtResource( 12 )]
+visible = false
 
 [node name="CameraTween" type="Tween" parent="."]
 pause_mode = 2
@@ -62,7 +70,6 @@ pause_mode = 2
 
 [node name="HyperGateway" type="Node" parent="HyperGodot"]
 script = ExtResource( 10 )
-autoStart = false
 
 [node name="HyperGossip" type="Node" parent="HyperGodot"]
 script = ExtResource( 11 )

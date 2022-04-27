@@ -16,7 +16,7 @@ signal finished_download(version)
 export var writable: bool = true
 export var persist: bool = true
 
-export var autoStart: bool = true
+export var autoStart: bool = false
 export var autoDownload: bool = true
 export var autoUpdate: bool = false
 
@@ -87,6 +87,8 @@ func setupGateway():
 	if !persist: args.append('--no-persist')
 	if writable: args.append('--writable')
 	
+	args.append("--silent")
+	
 	if port != DEFAULT_PORT:
 		args.append('--port')
 		args.append(String(port))
@@ -116,10 +118,22 @@ func getIsGatewayRunning() -> bool:
 		return true;
 	else:
 		return false;
+		
+func getGatewayPort() -> int:
+	if( getIsGatewayRunning() ):
+		return port
+	else:
+		return -1;
+		
+func getGatewayPID() -> int:
+	if( getIsGatewayRunning() ):
+		return processPID;
+	else:
+		return 0
 
 func getExecutibleName():
 	var name = OS.get_name()
-	if name == 'X11': return "hyper-gateway-linux"
+	if name == 'X11' or name == 'Linux': return "hyper-gateway-linux"
 	if name == 'OSX': return "hyper-gateway-macos"
 	if name == 'Windows': return "hyper-gateway-windows.exe"
 	push_error("Can not start gateway, invalid operating system " + name)

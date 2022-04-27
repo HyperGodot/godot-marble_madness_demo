@@ -13,6 +13,8 @@ export var extension_name = "hyper-gossip-v1"
 export var pool_size = 8
 export var queue_warning_size = 8
 
+var hyperGateway : HyperGateway
+
 var peerListRequest = HyperRequest.new()
 var eventSource = HyperEventSource.new()
 
@@ -31,7 +33,7 @@ func _ready():
 	peerListRequest.connect("request_completed", self, "_on_peer_list")
 	peerListRequest.use_threads = true
 
-	for i in range(pool_size):
+	for _i in range(pool_size):
 		var broadcastRequest = HyperRequest.new()
 		broadcastRequest.use_threads = true
 		add_child(broadcastRequest)
@@ -79,9 +81,14 @@ func rebroadcast(event):
 	_enqueue_broadcast_request(reqURL, body)
 
 func broadcast_event(type: String, data):
-	var reqURL = _get_extension_url()
-	var body = JSON.print(_generateEvent(type, data))
-	_enqueue_broadcast_request(reqURL, body)
+	if(hyperGateway == null):
+		# TODO : Make the link to HyperGateway static
+		hyperGateway = get_tree().get_current_scene().get_node("HyperGodot").get_node("HyperGateway")
+	if(hyperGateway != null):
+		if( hyperGateway.getIsGatewayRunning() ):
+			var reqURL = _get_extension_url()
+			var body = JSON.print(_generateEvent(type, data))
+			_enqueue_broadcast_request(reqURL, body)
 	
 func send_to_peer(peer, type, data):
 	var reqURL = _get_extension_url_to_peer(peer)
@@ -156,6 +163,9 @@ func _get_extension_url():
 
 func _get_extension_listen_url():
 	return url + '$/extensions/'
+	
+func _get_url() -> String:
+	return url
 
 func _make_id():
 	return str(randi()) + str(randi())
