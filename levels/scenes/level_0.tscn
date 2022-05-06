@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/levels/level0/assets_level_0.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/spawn_point/spawn_point.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://ui/PlayerConfig.tscn" type="PackedScene" id=13]
 [ext_resource path="res://menu/main/menu_main.scn" type="PackedScene" id=14]
 [ext_resource path="res://player/ball/player_ball_controller.gd" type="Script" id=15]
+[ext_resource path="res://levels/portal/Portal.tscn" type="PackedScene" id=16]
 
 [node name="Spatial" type="Node"]
 script = ExtResource( 3 )
@@ -66,6 +67,8 @@ visible = false
 [node name="CameraTween" type="Tween" parent="."]
 pause_mode = 2
 
+[node name="Portal" parent="." instance=ExtResource( 16 )]
+
 [node name="HyperGodot" type="Node" parent="."]
 
 [node name="HyperGateway" type="Node" parent="HyperGodot"]
@@ -84,3 +87,5 @@ autostart = true
 [connection signal="event" from="HyperGodot/HyperGossip" to="." method="_on_HyperGossip_event"]
 [connection signal="listening" from="HyperGodot/HyperGossip" to="." method="_on_HyperGossip_listening"]
 [connection signal="timeout" from="HyperGodot/GossipEventTimer" to="." method="_on_GossipEventTimer_timeout"]
+
+[editable path="Portal"]
